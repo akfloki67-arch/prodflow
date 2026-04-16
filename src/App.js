@@ -743,6 +743,41 @@ function OrderForm({ order, clients = [], onSave, onClose }) {
     if (!form.reference && !form.axonautId) form.reference = `CMD-00${nextId}`;
     onSave(form);
   };
+  const handlePdfImport = async (file) => {
+  const base64 = await new Promise((res) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result.split(",")[1]);
+    r.readAsDataURL(file);
+  });
+  const resp = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: "claude-sonnet-4-20250514",
+      max_tokens: 1000,
+      messages: [{ role: "user", content: [
+        { type: "document", source: { type: "base64", media_type: "application/pdf", data: base64 } },
+        { type: "text", text: `Analyse ce devis/facture et réponds UNIQUEMENT en JSON sans markdown:
+{"client":"","montant":"","reference":"","telephone":"","email":"","categories":["Flocage","DTF","Broderie","Véhicule","Vitrine","Enseigne","Conception graphique","Impression atelier","Impression fournisseur"],"resume":"résumé 2-3 lignes"}
+Mets uniquement les catégories détectées dans le tableau.` }
+      ]}]
+    })
+  });
+  const data = await resp.json();
+  const txt = data.content[0].text.replace(/```json|```/g,"").trim();
+  const parsed = JSON.parse(txt);
+  const types = (parsed.categories||[]).map(label => ({ group: label, label }));
+  setForm(f => ({ ...f,
+    client: parsed.client || f.client,
+    montant: parsed.montant || f.montant,
+    reference: parsed.reference || f.reference,
+    telephone: parsed.telephone || f.telephone,
+    email: parsed.email || f.email,
+    types,
+    notes: parsed.resume || f.notes,
+    devis_pdf: file.name,
+  }));
+};
 
   return (
     <div style={s.overlay} onClick={onClose}>
@@ -828,6 +863,11 @@ function OrderForm({ order, clients = [], onSave, onClose }) {
               placeholder="Instructions, priorité…" />
           </div>
         </div>
+        <div style={s.field}>
+  <label style={s.fieldLabel}>📄 Importer un devis / facture PDF</label>
+  <input type="file" accept="application/pdf" onChange={(e) => e.target.files[0] && handlePdfImport(e.target.files[0])} style={{ color: "#fff" }} />
+  </div>
+</div>
         <div style={s.modalFoot}>
           <button style={s.btnNew} onClick={handleSave}>{form.id ? "💾 Enregistrer" : "✦ Créer"}</button>
           <button style={{ ...s.btnEdit, marginLeft: 10 }} onClick={onClose}>Annuler</button>

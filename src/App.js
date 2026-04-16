@@ -749,23 +749,12 @@ function OrderForm({ order, clients = [], onSave, onClose }) {
     r.onload = () => res(r.result.split(",")[1]);
     r.readAsDataURL(file);
   });
-  const resp = await fetch("https://api.anthropic.com/v1/messages", {
+const resp = await fetch("https://khymdrnjxdfpbygvnslg.supabase.co/functions/v1/analyze-pdf", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 1000,
-      messages: [{ role: "user", content: [
-        { type: "document", source: { type: "base64", media_type: "application/pdf", data: base64 } },
-        { type: "text", text: `Analyse ce devis/facture et réponds UNIQUEMENT en JSON sans markdown:
-{"client":"","montant":"","reference":"","telephone":"","email":"","categories":["Flocage","DTF","Broderie","Véhicule","Vitrine","Enseigne","Conception graphique","Impression atelier","Impression fournisseur"],"resume":"résumé 2-3 lignes"}
-Mets uniquement les catégories détectées dans le tableau.` }
-      ]}]
-    })
-  });
-  const data = await resp.json();
-  const txt = data.content[0].text.replace(/```json|```/g,"").trim();
-  const parsed = JSON.parse(txt);
+    headers: { "Content-Type": "application/json", "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtoeW1kcm5qeGRmcGJ5Z3Zuc2xnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyODQ4OTksImV4cCI6MjA5MTg2MDg5OX0.xYtN_u89icWVepN2x8WmnZ_YPsEUmtjkIH3BZCdwxso` },
+    body: JSON.stringify({ pdfBase64: base64 })
+});
+const parsed = await resp.json();
   const types = (parsed.categories||[]).map(label => ({ group: label, label }));
   setForm(f => ({ ...f,
     client: parsed.client || f.client,

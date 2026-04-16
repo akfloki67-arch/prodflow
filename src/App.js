@@ -614,7 +614,7 @@ function OrderDetail({ order, onClose, onEdit, onDelete, onMove, onUpdate }) {
 
         <div style={s.modalFoot}>
           <button style={s.btnEdit} onClick={() => onEdit(order)}>✏️ Modifier</button>
-          <button style={s.btnDel} onClick={() => { if (confirm("Supprimer ?")) onDelete(order.id); }}>🗑 Supprimer</button>
+          <button style={s.btnDel} onClick={() => { if (window.confirm("Supprimer ?")) onDelete(order.id); }}>🗑 Supprimer</button>
         </div>
       </div>
     </div>
@@ -889,7 +889,7 @@ function ClientsBook({ clients, orders, onClose, onNewOrder, onDeleteClient }) {
                 <div style={{ display: "flex", flexDirection: "column", gap: 6, alignItems: "flex-end" }}>
                   <span style={s.clientCmdBadge}>{cmdCount} commande{cmdCount > 1 ? "s" : ""}</span>
                   <button style={s.clientNewCmd} onClick={() => onNewOrder(c)}>+ Commande</button>
-                  <button style={s.clientDel} onClick={() => { if (confirm(`Supprimer ${c.nom} ?`)) onDeleteClient(c.id); }}>🗑</button>
+                  <button style={s.clientDel} onClick={() => { if (window.confirm(`Supprimer ${c.nom} ?`)) onDeleteClient(c.id); }}>🗑</button>
                 </div>
               </div>
             );

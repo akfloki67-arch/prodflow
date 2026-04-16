@@ -808,7 +808,6 @@ const parsed = await resp.json();
             <Field label="Email" value={form.email} onChange={(v) => set("email", v)} placeholder="client@email.fr" />
           </div>
           <Field label="Référence" value={form.reference} onChange={(v) => set("reference", v)} placeholder="CMD-XXX" />
-          <Field label="Réf. Axonaut" value={form.axonautId} onChange={(v) => set("axonaut_id", v)} placeholder="AX-XXXX-XXX" />
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
             <Field label="Montant" value={form.montant} onChange={(v) => set("montant", v)} placeholder="ex: 850 €" />
             <Field label="Date" value={form.date} onChange={(v) => set("date", v)} type="date" />

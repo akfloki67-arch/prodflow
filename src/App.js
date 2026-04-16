@@ -1,6 +1,4 @@
-import { useState, useRef } from "react";
-const SUPABASE_URL = "https://khymdrnjxdfpbygvnslg.supabase.co";
-const SUPABASE_KEY = "sb_publishable_gOrbyzvOjHOjRggoG25N_Q_n7XpEE6H";
+import { useState, useRef, useEffect } from "react";
 
 // ─── CONSTANTES ────────────────────────────────────────────────────────────────
 
@@ -42,40 +40,6 @@ const MOCK_AXONAUT = [
 ];
 
 let nextId = 10;
-// ─── SUPABASE ──────────────────────────────────────────────────────────────────
-
-const sbFetch = (path, options = {}) =>
-  fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      "apikey": SUPABASE_KEY,
-      "Authorization": `Bearer ${SUPABASE_KEY}`,
-      "Prefer": "return=representation",
-      ...options.headers,
-    },
-  }).then((r) => r.json());
-
-const loadOrders = () => sbFetch("orders?select=*&order=created_at.desc");
-const loadClients = () => sbFetch("clients?select=*&order=created_at.desc");
-
-const saveOrder = (order) => {
-  const { id, ...data } = order;
-  return id
-    ? sbFetch(`orders?id=eq.${id}`, { method: "PATCH", body: JSON.stringify(data) })
-    : sbFetch("orders", { method: "POST", body: JSON.stringify(data) });
-};
-
-const saveClient = (client) => {
-  const { id, ...data } = client;
-  return sbFetch("clients", {
-    method: "POST",
-    headers: { "Prefer": "resolution=merge-duplicates,return=representation" },
-    body: JSON.stringify(data),
-  });
-};
-
-const deleteOrderDb = (id) => sbFetch(`orders?id=eq.${id}`, { method: "DELETE" });
 
 const emptyOrder = () => ({
   id: null,
@@ -650,7 +614,7 @@ function OrderDetail({ order, onClose, onEdit, onDelete, onMove, onUpdate }) {
 
         <div style={s.modalFoot}>
           <button style={s.btnEdit} onClick={() => onEdit(order)}>✏️ Modifier</button>
-          <button style={s.btnDel} onClick={() => { if (window.confirm("Supprimer ?")) onDelete(order.id); }}>🗑 Supprimer</button>
+          <button style={s.btnDel} onClick={() => { if (confirm("Supprimer ?")) onDelete(order.id); }}>🗑 Supprimer</button>
         </div>
       </div>
     </div>
@@ -925,7 +889,7 @@ function ClientsBook({ clients, orders, onClose, onNewOrder, onDeleteClient }) {
                 <div style={{ display: "flex", flexDirection: "column", gap: 6, alignItems: "flex-end" }}>
                   <span style={s.clientCmdBadge}>{cmdCount} commande{cmdCount > 1 ? "s" : ""}</span>
                   <button style={s.clientNewCmd} onClick={() => onNewOrder(c)}>+ Commande</button>
-                  <button style={s.clientDel} onClick={() => { if (window.confirm(`Supprimer ${c.nom} ?`)) onDeleteClient(c.id); }}>🗑</button>
+                  <button style={s.clientDel} onClick={() => { if (confirm(`Supprimer ${c.nom} ?`)) onDeleteClient(c.id); }}>🗑</button>
                 </div>
               </div>
             );

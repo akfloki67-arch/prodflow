@@ -399,7 +399,7 @@ function OrderDetail({ order, onClose, onEdit, onDelete, onMove, onUpdate }) {
 
   const toggle = (key) => onUpdate({ ...order, [key]: !order[key] });
   const setBat = (val) => onUpdate({ ...order, bat_statut: val });
-  const addBatFile = (f) => onUpdate({ ...order, bat_files:: [...(order.bat_files: || []), { name: f.name, url: URL.createObjectURL(f) }] });
+  const addBatFile = (f) => onUpdate({ ...order, bat_files: [...(order.bat_files || []), { name: f.name, url: URL.createObjectURL(f) }] });
   const addMaq = (f) => onUpdate({ ...order, maquettes: [...(order.maquettes || []), { name: f.name, url: URL.createObjectURL(f) }] });
 
   const handleDevisUpload = async (file) => {

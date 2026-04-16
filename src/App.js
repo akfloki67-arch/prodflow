@@ -86,6 +86,16 @@ export default function App() {
     loadOrders().then((data) => { if (Array.isArray(data)) setOrders(data); });
     loadClients().then((data) => { if (Array.isArray(data)) setClients(data); });
   }, []);
+  useEffect(() => {
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  orders.forEach(o => {
+    if (o.status === "termine" && o.updated_at && new Date(o.updated_at) < sevenDaysAgo) {
+      deleteOrderDb(o.id);
+      setOrders(p => p.filter(x => x.id !== o.id));
+    }
+  });
+}, [orders.length]);
 const [orders, setOrders] = useState([]);
 
 

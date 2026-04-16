@@ -34,9 +34,9 @@ function allTypeLabels(types = []) {
 }
 
 const MOCK_AXONAUT = [
-  { axonautId: "AX-2024-089", client: "Mairie de Toulouse", montant: "3 450 €", date: "2026-04-11", pdf: null, telephone: "05 61 22 33 44", email: "commandes@mairie-toulouse.fr" },
-  { axonautId: "AX-2024-090", client: "BTP Constructions Sud", montant: "980 €", date: "2026-04-12", pdf: null, telephone: "06 12 34 56 78", email: "contact@btpsud.fr" },
-  { axonautId: "AX-2024-091", client: "Pharmacie Centrale", montant: "560 €", date: "2026-04-13", pdf: null, telephone: "05 34 45 67 89", email: "pharmacentrale@gmail.com" },
+  { axonaut_id: "AX-2024-089", client: "Mairie de Toulouse", montant: "3 450 €", date: "2026-04-11", pdf: null, telephone: "05 61 22 33 44", email: "commandes@mairie-toulouse.fr" },
+  { axonaut_id: "AX-2024-090", client: "BTP Constructions Sud", montant: "980 €", date: "2026-04-12", pdf: null, telephone: "06 12 34 56 78", email: "contact@btpsud.fr" },
+  { axonaut_id: "AX-2024-091", client: "Pharmacie Centrale", montant: "560 €", date: "2026-04-13", pdf: null, telephone: "05 34 45 67 89", email: "pharmacentrale@gmail.com" },
 ];
 
 let nextId = 10;
@@ -55,7 +55,7 @@ const emptyOrder = () => ({
   id: null,
   client: "",
   reference: "",
-  axonautId: "",
+  axonaut_id: "",
   montant: "",
   date: new Date().toISOString().slice(0, 10),
   status: "nouvelle",
@@ -108,11 +108,11 @@ const [clients, setClients] = useState([]);
       if (existing) {
         // Mise à jour si nouvelles infos
         return prev.map((c) => c.nom.toLowerCase() === order.client.toLowerCase()
-          ? { ...c, telephone: order.telephone || c.telephone, email: order.email || c.email, axonautId: order.axonautId || c.axonautId }
+          ? { ...c, telephone: order.telephone || c.telephone, email: order.email || c.email, axonaut_id: order.axonautId || c.axonautId }
           : c
         );
       } else {
-        return [...prev, { id: Date.now(), nom: order.client, telephone: order.telephone || "", email: order.email || "", axonautId: order.axonautId || "" }];
+        return [...prev, { id: Date.now(), nom: order.client, telephone: order.telephone || "", email: order.email || "", axonaut_id: order.axonautId || "" }];
       }
     });
   };
@@ -145,7 +145,7 @@ const [clients, setClients] = useState([]);
       id: nextId++,
       client: ax.client,
       reference: `CMD-00${nextId}`,
-      axonautId: ax.axonautId,
+      axonaut_id: ax.axonautId,
       montant: ax.montant,
       date: ax.date,
       status: "nouvelle",

@@ -131,7 +131,7 @@ const [clients, setClients] = useState([]);
     });
   };
 
-  const remove = (id) => { setOrders((p) => p.filter((o) => o.id !== id)); setViewOrder(null); };
+const remove = (id) => { deleteOrderDb(id); setOrders((p) => p.filter((o) => o.id !== id)); setViewOrder(null); };
 
   const move = (id, col) => {
     setOrders((p) => p.map((o) => o.id === id ? { ...o, status: col } : o));

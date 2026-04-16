@@ -82,23 +82,8 @@ const emptyOrder = () => ({
 // ─── APP ───────────────────────────────────────────────────────────────────────
 
 export default function App() {
-  useEffect(() => {
-    loadOrders().then((data) => { if (Array.isArray(data)) setOrders(data); });
-    loadClients().then((data) => { if (Array.isArray(data)) setClients(data); });
-  }, []);
-  useEffect(() => {
-  const sevenDaysAgo = new Date();
-  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-  orders.forEach(o => {
-    if (o.status === "termine" && o.updated_at && new Date(o.updated_at) < sevenDaysAgo) {
-      deleteOrderDb(o.id);
-      setOrders(p => p.filter(x => x.id !== o.id));
-    }
-  });
-}, [orders.length]);
-const [orders, setOrders] = useState([]);
-
-
+  const [orders, setOrders] = useState([]);
+  const [clients, setClients] = useState([]);
   const [showForm, setShowForm]       = useState(false);
   const [editOrder, setEditOrder]     = useState(null);
   const [viewOrder, setViewOrder]     = useState(null);
@@ -107,7 +92,23 @@ const [orders, setOrders] = useState([]);
   const [dragging, setDragging]       = useState(null);
   const [dragOver, setDragOver]       = useState(null);
   const [importedIds, setImportedIds] = useState([]);
-const [clients, setClients] = useState([]);
+
+  useEffect(() => {
+    loadOrders().then((data) => { if (Array.isArray(data)) setOrders(data); });
+    loadClients().then((data) => { if (Array.isArray(data)) setClients(data); });
+  }, []);
+
+  useEffect(() => {
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    orders.forEach(o => {
+      if (o.status === "termine" && o.updated_at && new Date(o.updated_at) < sevenDaysAgo) {
+        deleteOrderDb(o.id);
+        setOrders(p => p.filter(x => x.id !== o.id));
+      }
+    });
+  }, [orders.length]);
+
 
 
   // Enregistre ou met à jour le client dans l'annuaire à chaque sauvegarde commande

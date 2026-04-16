@@ -86,36 +86,8 @@ export default function App() {
     loadOrders().then((data) => { if (Array.isArray(data)) setOrders(data); });
     loadClients().then((data) => { if (Array.isArray(data)) setClients(data); });
   }, []);
-  const [orders, setOrders] = useState([
-    {
-      ...emptyOrder(),
-      id: 1,
-      client: "Garage Dupont",
-      reference: "CMD-001",
-      axonautId: "AX-2024-085",
-      montant: "1 250 €",
-      date: "2026-04-10",
-      status: "production",
-      types: [{ group: "Véhicule", label: "Véhicule" }, { group: "Conception graphique", label: "Conception graphique" }],
-      fournisseurPasse: true,
-      batStatut: "valide",
-      batFiles: [],
-      notes: "Livraison vendredi",
-    },
-    {
-      ...emptyOrder(),
-      id: 2,
-      client: "Sport & Co",
-      reference: "CMD-002",
-      montant: "780 €",
-      date: "2026-04-12",
-      status: "nouvelle",
-      types: [{ group: "Textile", label: "Flocage" }, { group: "Textile", label: "DTF" }],
-      fournisseurPasse: false,
-      batStatut: "a_faire",
-      notes: "50 maillots + numéros dos",
-    },
-  ]);
+const [orders, setOrders] = useState([]);
+
 
   const [showForm, setShowForm]       = useState(false);
   const [editOrder, setEditOrder]     = useState(null);
@@ -125,10 +97,8 @@ export default function App() {
   const [dragging, setDragging]       = useState(null);
   const [dragOver, setDragOver]       = useState(null);
   const [importedIds, setImportedIds] = useState([]);
-  const [clients, setClients]         = useState([
-    { id: 1, nom: "Garage Dupont", telephone: "05 61 10 20 30", email: "contact@garagedupont.fr", axonautId: "AX-2024-085" },
-    { id: 2, nom: "Sport & Co",    telephone: "06 77 88 99 00", email: "sportco@gmail.com",        axonautId: "" },
-  ]);
+const [clients, setClients] = useState([]);
+
 
   // Enregistre ou met à jour le client dans l'annuaire à chaque sauvegarde commande
   const upsertClient = (order) => {

@@ -310,7 +310,7 @@ function Card({ order, col, onDragStart, onDragEnd, onClick }) {
         <Pill ok={order.fournisseur_passe} labelOk="Fourn. ✓" labelNo="Fourn. ?" color="#4ECBA1" />
         <Pill ok={order.bat_statut === "valide"} labelOk="BAT ✓" labelNo="BAT à faire" color="#F4A942" />
         {(order.bat_files?.length > 0 || order.maquettes?.length > 0 || order.devis_pdf) && (
-          <span style={s.fileChip}>📎 {(order.bat_files:?.length || 0) + (order.maquettes?.length || 0) + (order.devis_pdf ? 1 : 0)}</span>
+          <span style={s.fileChip}>📎 {(order.bat_files?.length || 0) + (order.maquettes?.length || 0) + (order.devis_pdf ? 1 : 0)}</span>
         )}
       </div>
 

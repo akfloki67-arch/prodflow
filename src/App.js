@@ -33,11 +33,6 @@ function allTypeLabels(types = []) {
   });
 }
 
-const MOCK_AXONAUT = [
-  { axonaut_id: "AX-2024-089", client: "Mairie de Toulouse", montant: "3 450 €", date: "2026-04-11", pdf: null, telephone: "05 61 22 33 44", email: "commandes@mairie-toulouse.fr" },
-  { axonaut_id: "AX-2024-090", client: "BTP Constructions Sud", montant: "980 €", date: "2026-04-12", pdf: null, telephone: "06 12 34 56 78", email: "contact@btpsud.fr" },
-  { axonaut_id: "AX-2024-091", client: "Pharmacie Centrale", montant: "560 €", date: "2026-04-13", pdf: null, telephone: "05 34 45 67 89", email: "pharmacentrale@gmail.com" },
-];
 
 let nextId = 10;
 
@@ -87,11 +82,9 @@ export default function App() {
   const [showForm, setShowForm]       = useState(false);
   const [editOrder, setEditOrder]     = useState(null);
   const [viewOrder, setViewOrder]     = useState(null);
-  const [showAxonaut, setShowAxonaut] = useState(false);
   const [showClients, setShowClients] = useState(false);
   const [dragging, setDragging]       = useState(null);
   const [dragOver, setDragOver]       = useState(null);
-  const [importedIds, setImportedIds] = useState([]);
 
   useEffect(() => {
     loadOrders().then((data) => { if (Array.isArray(data)) setOrders(data); });
@@ -151,23 +144,6 @@ const remove = (id) => { deleteOrderDb(id); setOrders((p) => p.filter((o) => o.i
   if (order) saveOrder({ ...order, status: col, updated_at: now });
 };
 
-  const importFromAxonaut = (ax) => {
-    const order = {
-      ...emptyOrder(),
-      id: nextId++,
-      client: ax.client,
-      reference: `CMD-00${nextId}`,
-      axonaut_id: ax.axonautId,
-      montant: ax.montant,
-      date: ax.date,
-      status: "nouvelle",
-      telephone: ax.telephone || "",
-      email: ax.email || "",
-    };
-    setOrders((p) => [...p, order]);
-    setImportedIds((p) => [...p, ax.axonautId]);
-    upsertClient(order);
-  };
 
   const updateOrder = (updated) => {
     setOrders((p) => p.map((o) => o.id === updated.id ? updated : o));
@@ -176,7 +152,7 @@ const remove = (id) => { deleteOrderDb(id); setOrders((p) => p.filter((o) => o.i
 
   return (
     <div style={s.root}>
-      <Header onNew={() => { setEditOrder(emptyOrder()); setShowForm(true); }} onAxonaut={() => setShowAxonaut(true)} onClients={() => setShowClients(true)} orders={orders} clients={clients} />
+      <Header onNew={() => { setEditOrder(emptyOrder()); setShowForm(true); }} onClients={() => setShowClients(true)} orders={orders} clients={clients} />
 
       {/* Board */}
       <div style={s.board}>
@@ -215,14 +191,6 @@ const remove = (id) => { deleteOrderDb(id); setOrders((p) => p.filter((o) => o.i
           onUpdate={updateOrder}
         />
       )}
-      {showAxonaut && (
-        <AxonautImport
-          mock={MOCK_AXONAUT}
-          imported={importedIds}
-          onImport={importFromAxonaut}
-          onClose={() => setShowAxonaut(false)}
-        />
-      )}
       {showClients && (
         <ClientsBook
           clients={clients}
@@ -238,7 +206,7 @@ const remove = (id) => { deleteOrderDb(id); setOrders((p) => p.filter((o) => o.i
 
 // ─── HEADER ────────────────────────────────────────────────────────────────────
 
-function Header({ onNew, onAxonaut, onClients, orders, clients }) {
+function Header({ onNew, onClients, orders, clients }) {
   return (
     <header style={s.header}>
       <div style={s.headerLeft}>
@@ -259,7 +227,6 @@ function Header({ onNew, onAxonaut, onClients, orders, clients }) {
       </div>
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
         <button style={s.btnClients} onClick={onClients}>👥 Clients <span style={s.clientsBadge}>{clients.length}</span></button>
-        <button style={s.btnAxonaut} onClick={onAxonaut}>⬇ Axonaut</button>
         <button style={s.btnNew} onClick={onNew}>+ Nouvelle commande</button>
       </div>
     </header>
@@ -578,13 +545,6 @@ function OrderDetail({ order, onClose, onEdit, onDelete, onMove, onUpdate }) {
                 <span style={s.aiSpinner}>⟳</span> Analyse du devis en cours…
               </div>
             )}
-          </Section>
-
-          {/* ── Maquettes ── */}
-          <Section title="Maquettes & fichiers" icon="📎">
-            {order.maquettes?.map((f, i) => <FileChip key={i} f={f} />)}
-            <UploadBtn label="+ Ajouter une maquette" onClick={() => maqRef.current.click()} />
-            <input ref={maqRef} type="file" multiple style={{ display: "none" }} onChange={(e) => Array.from(e.target.files).forEach(addMaq)} />
           </Section>
 
           {/* ── SAV ── */}
@@ -940,73 +900,6 @@ function ClientsBook({ clients, orders, onClose, onNewOrder, onDeleteClient }) {
   );
 }
 
-// ─── AXONAUT IMPORT ────────────────────────────────────────────────────────────
-
-function AxonautImport({ mock, imported, onImport, onClose }) {
-  const [apiKey, setApiKey] = useState("");
-  const [status, setStatus] = useState("idle"); // idle | loading | done
-
-  const simulateImport = () => {
-    setStatus("loading");
-    setTimeout(() => setStatus("done"), 1200);
-  };
-
-  return (
-    <div style={s.overlay} onClick={onClose}>
-      <div style={{ ...s.modal, maxWidth: 500 }} onClick={(e) => e.stopPropagation()}>
-        <div style={{ ...s.modalTop, borderColor: "#4F9CF9" }}>
-          <div style={s.modalClient}>Import Axonaut</div>
-          <div style={{ color: "#556", fontSize: 12, marginTop: 4 }}>Devis signés → nouvelles commandes</div>
-          <button style={s.closeBtn} onClick={onClose}>✕</button>
-        </div>
-        <div style={s.modalBody}>
-          <div style={s.field}>
-            <label style={s.fieldLabel}>Clé API Axonaut</label>
-            <input
-              style={s.fieldInput}
-              type="password"
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              placeholder="Paramètres → API → Votre clé"
-            />
-            <div style={{ fontSize: 11, color: "#446", marginTop: 4 }}>
-              Axonaut → Paramètres → Intégrations → API
-            </div>
-          </div>
-
-          <button style={{ ...s.btnNew, width: "100%", marginBottom: 16, opacity: status === "loading" ? 0.6 : 1 }} onClick={simulateImport}>
-            {status === "loading" ? "Connexion…" : "🔄 Récupérer les devis signés"}
-          </button>
-
-          {status === "done" && (
-            <div>
-              <div style={s.sectionTitle}>📋 Devis disponibles ({mock.length})</div>
-              {mock.map((ax) => {
-                const done = imported.includes(ax.axonautId);
-                return (
-                  <div key={ax.axonautId} style={s.axoRow}>
-                    <div>
-                      <div style={{ fontWeight: 700, color: "#ECF0FF", fontSize: 14 }}>{ax.client}</div>
-                      <div style={{ color: "#556", fontSize: 12 }}>{ax.axonautId} · {ax.date} · <span style={{ color: "#4F9CF9" }}>{ax.montant}</span></div>
-                    </div>
-                    <button
-                      style={{ ...s.btnNew, fontSize: 12, padding: "6px 14px", opacity: done ? 0.4 : 1, cursor: done ? "default" : "pointer" }}
-                      onClick={() => !done && onImport(ax)}
-                      disabled={done}
-                    >
-                      {done ? "✓ Importé" : "Importer"}
-                    </button>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // ─── STYLES ────────────────────────────────────────────────────────────────────
 
 const s = {
@@ -1023,7 +916,6 @@ const s = {
   hDot: { width: 7, height: 7, borderRadius: "50%", display: "inline-block" },
   hLabel: { fontSize: 11, color: "#7A6F62", letterSpacing: 0.5 },
   btnNew: { background: "linear-gradient(135deg,#4F9CF9,#7B6EF6)", color: "#fff", border: "none", borderRadius: 10, padding: "9px 20px", fontSize: 13, fontWeight: 700, cursor: "pointer" },
-  btnAxonaut: { background: "#F0EDE8", color: "#4F9CF9", border: "1px solid #4F9CF944", borderRadius: 10, padding: "9px 18px", fontSize: 13, fontWeight: 700, cursor: "pointer" },
   btnClients: { background: "#F0EDE8", color: "#3BAB85", border: "1px solid #4ECBA144", borderRadius: 10, padding: "9px 18px", fontSize: 13, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 6 },
   clientsBadge: { background: "#4ECBA122", color: "#3BAB85", borderRadius: 10, padding: "1px 7px", fontSize: 11, fontWeight: 800 },
 
@@ -1093,9 +985,6 @@ const s = {
   fieldInput: { width: "100%", background: "#EEEAE4", border: "1px solid #DDD8D0", borderRadius: 8, padding: "9px 12px", color: "#1A1D2C", fontSize: 14, outline: "none", boxSizing: "border-box" },
   typeBtn: { background: "#EEEAE4", border: "1.5px solid #DDD8D0", borderRadius: 8, padding: "6px 13px", fontSize: 12, color: "#7A6F62", cursor: "pointer", fontWeight: 600, transition: "all .15s" },
   typeGroupLabel: { fontSize: 11, color: "#9A8F80", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 4 },
-
-  // Axonaut import
-  axoRow: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 12px", background: "#EEEAE4", borderRadius: 10, marginBottom: 8 },
 
   // Suggestions client
   suggestions: { position: "absolute", top: "100%", left: 0, right: 0, background: "#FDFCFA", border: "1px solid #DDD8D0", borderRadius: 10, zIndex: 100, maxHeight: 200, overflowY: "auto", boxShadow: "0 8px 24px rgba(0,0,0,0.12)" },

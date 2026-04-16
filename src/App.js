@@ -62,18 +62,18 @@ const emptyOrder = () => ({
   // Types de commande
   types: [],
   // Fournisseur
-  fournisseurPasse: false,
+  fournisseur_passe false,
   // BAT
-  batStatut: "a_faire", // "a_faire" | "valide"
-  batFiles: [],
+  bat_statut: "a_faire", // "a_faire" | "valide"
+  bat_files:: [],
   // Devis PDF
-  devisPdf: null,
+  devis_pdf: null,
   // Maquettes libres
   maquettes: [],
   // Notes
   notes: "",
   // SAV
-  savCommentaires: [],
+  sav_commentaires: [],
   // Contact client
   telephone: "",
   email: "",
@@ -308,15 +308,15 @@ function Card({ order, col, onDragStart, onDragEnd, onClick }) {
       {/* Indicateurs */}
       <div style={s.indicators}>
         <Pill ok={order.fournisseurPasse} labelOk="Fourn. ✓" labelNo="Fourn. ?" color="#4ECBA1" />
-        <Pill ok={order.batStatut === "valide"} labelOk="BAT ✓" labelNo="BAT à faire" color="#F4A942" />
-        {(order.batFiles?.length > 0 || order.maquettes?.length > 0 || order.devisPdf) && (
-          <span style={s.fileChip}>📎 {(order.batFiles?.length || 0) + (order.maquettes?.length || 0) + (order.devisPdf ? 1 : 0)}</span>
+        <Pill ok={order.bat_statut === "valide"} labelOk="BAT ✓" labelNo="BAT à faire" color="#F4A942" />
+        {(order.bat_files:?.length > 0 || order.maquettes?.length > 0 || order.devis_pdf) && (
+          <span style={s.fileChip}>📎 {(order.bat_files:?.length || 0) + (order.maquettes?.length || 0) + (order.devis_pdf ? 1 : 0)}</span>
         )}
       </div>
 
       {order.notes && <div style={s.cardNote}>💬 {order.notes}</div>}
-      {order.status === "sav" && order.savCommentaires?.length > 0 && (
-        <div style={s.savBadgeCard}>⚠ {order.savCommentaires.length} commentaire{order.savCommentaires.length > 1 ? "s" : ""} SAV</div>
+      {order.status === "sav" && order.sav_commentaires?.length > 0 && (
+        <div style={s.savBadgeCard}>⚠ {order.sav_commentaires.length} commentaire{order.sav_commentaires.length > 1 ? "s" : ""} SAV</div>
       )}
       {order.status === "termine" && order.telephone && (
         <a href={`tel:${order.telephone.replace(/\s/g, "")}`} style={s.cardCallBtn} onClick={(e) => e.stopPropagation()}>
@@ -398,13 +398,13 @@ function OrderDetail({ order, onClose, onEdit, onDelete, onMove, onUpdate }) {
   const [analyseLoading, setAnalyseLoading] = useState(false);
 
   const toggle = (key) => onUpdate({ ...order, [key]: !order[key] });
-  const setBat = (val) => onUpdate({ ...order, batStatut: val });
-  const addBatFile = (f) => onUpdate({ ...order, batFiles: [...(order.batFiles || []), { name: f.name, url: URL.createObjectURL(f) }] });
+  const setBat = (val) => onUpdate({ ...order, bat_statut: val });
+  const addBatFile = (f) => onUpdate({ ...order, bat_files:: [...(order.bat_files: || []), { name: f.name, url: URL.createObjectURL(f) }] });
   const addMaq = (f) => onUpdate({ ...order, maquettes: [...(order.maquettes || []), { name: f.name, url: URL.createObjectURL(f) }] });
 
   const handleDevisUpload = async (file) => {
     const url = URL.createObjectURL(file);
-    onUpdate({ ...order, devisPdf: { name: file.name, url } });
+    onUpdate({ ...order, devis_pdf: { name: file.name, url } });
     setAnalyseLoading(true);
     try {
       const base64 = await new Promise((res, rej) => {
@@ -430,11 +430,11 @@ function OrderDetail({ order, onClose, onEdit, onDelete, onMove, onUpdate }) {
         });
         onUpdate({
           ...order,
-          devisPdf: { name: file.name, url },
+          devis_pdf: { name: file.name, url },
           notes: noteAuto,
-          noteAutoGeneree: true,
+          note_auto_generee: true,
           types: merged,
-          typesAutoDetectes: nouvCats.map((c) => c.label),
+          types_auto_detectes: nouvCats.map((c) => c.label),
         });
       }
     } catch (e) {
@@ -455,7 +455,7 @@ function OrderDetail({ order, onClose, onEdit, onDelete, onMove, onUpdate }) {
           <div style={s.modalClient}>{order.client}</div>
           <div style={{ display: "flex", gap: 8, marginTop: 8, flexWrap: "wrap", alignItems: "center" }}>
             {types.map((t, i) => {
-              const isAuto = (order.typesAutoDetectes || []).includes(t.label);
+              const isAuto = (order.types_auto_detectes || []).includes(t.label);
               return (
                 <span key={i} style={{ ...s.tag, background: t.color + "22", color: t.color, position: "relative" }}>
                   {TYPE_GROUPS.find(g => g.group === t.group)?.emoji} {t.label}
@@ -463,7 +463,7 @@ function OrderDetail({ order, onClose, onEdit, onDelete, onMove, onUpdate }) {
                 </span>
               );
             })}
-            {(order.typesAutoDetectes || []).length > 0 && (
+            {(order.types_auto_detectes || []).length > 0 && (
               <span style={s.aiBadge}>✦ Catégories détectées automatiquement</span>
             )}
           </div>
@@ -520,19 +520,19 @@ function OrderDetail({ order, onClose, onEdit, onDelete, onMove, onUpdate }) {
               <span style={s.toggleLabel}>Statut BAT</span>
               <div style={{ display: "flex", gap: 8 }}>
                 <button
-                  style={{ ...s.toggle, background: order.batStatut === "a_faire" ? "#F4A942" : "#2A2D3A", color: order.batStatut === "a_faire" ? "#fff" : "#556" }}
+                  style={{ ...s.toggle, background: order.bat_statut === "a_faire" ? "#F4A942" : "#2A2D3A", color: order.bat_statut === "a_faire" ? "#fff" : "#556" }}
                   onClick={() => setBat("a_faire")}
                 >À faire</button>
                 <button
-                  style={{ ...s.toggle, background: order.batStatut === "valide" ? "#4ECBA1" : "#2A2D3A", color: order.batStatut === "valide" ? "#fff" : "#556" }}
+                  style={{ ...s.toggle, background: order.bat_statut === "valide" ? "#4ECBA1" : "#2A2D3A", color: order.bat_statut === "valide" ? "#fff" : "#556" }}
                   onClick={() => setBat("valide")}
                 >✓ Validé</button>
               </div>
             </div>
-            {order.batStatut === "valide" && (
+            {order.bat_statut === "valide" && (
               <div style={{ marginTop: 10 }}>
                 <div style={s.filesLabel}>Fichiers BAT validés</div>
-                {order.batFiles?.map((f, i) => <FileChip key={i} f={f} />)}
+                {order.bat_files:?.map((f, i) => <FileChip key={i} f={f} />)}
                 <UploadBtn label="+ Ajouter fichier BAT" onClick={() => batRef.current.click()} />
                 <input ref={batRef} type="file" multiple style={{ display: "none" }} onChange={(e) => Array.from(e.target.files).forEach(addBatFile)} />
               </div>
@@ -541,9 +541,9 @@ function OrderDetail({ order, onClose, onEdit, onDelete, onMove, onUpdate }) {
 
           {/* ── Devis PDF + Analyse IA ── */}
           <Section title="Devis" icon="📄">
-            {order.devisPdf ? (
+            {order.devis_pdf ? (
               <div>
-                <FileChip f={order.devisPdf} />
+                <FileChip f={order.devis_pdf} />
                 <button
                   style={{ ...s.uploadBtn, marginTop: 6 }}
                   onClick={() => devisRef.current.click()}
@@ -582,13 +582,13 @@ function OrderDetail({ order, onClose, onEdit, onDelete, onMove, onUpdate }) {
 
           {/* ── Notes ── */}
           <Section title="Notes" icon="💬">
-            {order.noteAutoGeneree && (
+            {order.note_auto_generee && (
               <div style={s.aiBadge}>✦ Résumé généré automatiquement par IA</div>
             )}
             <textarea
               style={{ ...s.fieldInput, minHeight: 80, resize: "vertical", marginTop: 4 }}
               value={order.notes || ""}
-              onChange={(e) => onUpdate({ ...order, notes: e.target.value, noteAutoGeneree: false })}
+              onChange={(e) => onUpdate({ ...order, notes: e.target.value, note_auto_generee: false })}
               placeholder="Les notes apparaîtront ici après l'upload du devis PDF…"
             />
           </Section>
@@ -657,12 +657,12 @@ function SavSection({ order, onUpdate }) {
       text,
       date: new Date().toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }),
     };
-    onUpdate({ ...order, savCommentaires: [...(order.savCommentaires || []), comment] });
+    onUpdate({ ...order, sav_commentaires: [...(order.sav_commentaires || []), comment] });
     setNewComment("");
   };
 
   const removeComment = (id) => {
-    onUpdate({ ...order, savCommentaires: order.savCommentaires.filter((c) => c.id !== id) });
+    onUpdate({ ...order, sav_commentaires: order.sav_commentaires.filter((c) => c.id !== id) });
   };
 
   return (
@@ -670,12 +670,12 @@ function SavSection({ order, onUpdate }) {
       <div style={{ ...s.sectionTitle, color: "#FF5B5B" }}>⚠ SAV — Détail du problème</div>
 
       {/* Liste des commentaires */}
-      {(order.savCommentaires || []).length === 0 && (
+      {(order.sav_commentaires || []).length === 0 && (
         <div style={{ color: "#554", fontSize: 12, fontStyle: "italic", marginBottom: 10 }}>
           Aucun commentaire pour l'instant. Décrivez le problème ci-dessous.
         </div>
       )}
-      {(order.savCommentaires || []).map((c) => (
+      {(order.sav_commentaires || []).map((c) => (
         <div key={c.id} style={s.savComment}>
           <div style={s.savCommentText}>{c.text}</div>
           <div style={s.savCommentMeta}>

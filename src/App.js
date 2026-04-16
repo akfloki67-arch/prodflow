@@ -42,7 +42,7 @@ const MOCK_AXONAUT = [
 let nextId = 10;
 
 const SUPABASE_URL = "https://khymdrnjxdfpbygvnslg.supabase.co";
-const SUPABASE_KEY = "sb_publishable_gOrbyzvOjHOjRggoG25N_Q_n7XpEE6H";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtoeW1kcm5qeGRmcGJ5Z3Zuc2xnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyODQ4OTksImV4cCI6MjA5MTg2MDg5OX0.xYtN_u89icWVepN2x8WmnZ_YPsEUmtjkIH3BZCdwxso";
 
 const sbFetch = (path, options = {}) => fetch(`${SUPABASE_URL}/rest/v1/${path}`, { ...options, headers: { "Content-Type": "application/json", "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}`, "Prefer": "return=representation", ...options.headers } }).then((r) => r.json());
 const loadOrders = () => sbFetch("orders?select=*&order=created_at.desc");

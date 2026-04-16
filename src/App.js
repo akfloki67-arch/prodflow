@@ -144,10 +144,11 @@ const [clients, setClients] = useState([]);
 const remove = (id) => { deleteOrderDb(id); setOrders((p) => p.filter((o) => o.id !== id)); setViewOrder(null); };
 
   const move = (id, col) => {
-    setOrders((p) => p.map((o) => o.id === id ? { ...o, status: col } : o));
-    const order = orders.find((o) => o.id === id);
-    if (order) saveOrder({ ...order, status: col });
-  };
+  const now = new Date().toISOString();
+  setOrders((p) => p.map((o) => o.id === id ? { ...o, status: col, updated_at: now } : o));
+  const order = orders.find((o) => o.id === id);
+  if (order) saveOrder({ ...order, status: col, updated_at: now });
+};
 
   const importFromAxonaut = (ax) => {
     const order = {

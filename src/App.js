@@ -1009,14 +1009,14 @@ const s = {
   headerLeft: { display: "flex", alignItems: "center", gap: 14 },
   logo: { fontSize: 30, color: "#4F9CF9" },
   appName: { fontSize: 21, fontWeight: 900, letterSpacing: 3, color: "#fff" },
-  appSub: { fontSize: 10, color: "#445", letterSpacing: 1.5, textTransform: "uppercase", marginTop: 2 },
+  appSub: { fontSize: 10, color: "#7A8BAA", letterSpacing: 1.5, textTransform: "uppercase", marginTop: 2 },
   headerStats: { display: "flex", gap: 20, flexWrap: "wrap" },
   hStat: { display: "flex", alignItems: "center", gap: 6 },
   hDot: { width: 7, height: 7, borderRadius: "50%", display: "inline-block" },
-  hLabel: { fontSize: 11, color: "#445", letterSpacing: 0.5 },
+  hLabel: { fontSize: 11, color: "#8899BB", letterSpacing: 0.5 },
   btnNew: { background: "linear-gradient(135deg,#4F9CF9,#7B6EF6)", color: "#fff", border: "none", borderRadius: 10, padding: "9px 20px", fontSize: 13, fontWeight: 700, cursor: "pointer" },
-  btnAxonaut: { background: "#1A1D2C", color: "#4F9CF9", border: "1px solid #4F9CF922", borderRadius: 10, padding: "9px 18px", fontSize: 13, fontWeight: 700, cursor: "pointer" },
-  btnClients: { background: "#1A1D2C", color: "#4ECBA1", border: "1px solid #4ECBA122", borderRadius: 10, padding: "9px 18px", fontSize: 13, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 6 },
+  btnAxonaut: { background: "#1A1D2C", color: "#4F9CF9", border: "1px solid #4F9CF933", borderRadius: 10, padding: "9px 18px", fontSize: 13, fontWeight: 700, cursor: "pointer" },
+  btnClients: { background: "#1A1D2C", color: "#4ECBA1", border: "1px solid #4ECBA133", borderRadius: 10, padding: "9px 18px", fontSize: 13, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 6 },
   clientsBadge: { background: "#4ECBA133", color: "#4ECBA1", borderRadius: 10, padding: "1px 7px", fontSize: 11, fontWeight: 800 },
 
   // Board
@@ -1025,17 +1025,17 @@ const s = {
   // Column
   col: { flex: "0 0 270px", background: "#12141E", borderRadius: 14, border: "1.5px solid #1A1D2C", display: "flex", flexDirection: "column", transition: "border-color .2s, background .2s" },
   colHead: { display: "flex", alignItems: "center", gap: 8, padding: "14px 14px 4px" },
-  colTitle: { flex: 1, fontWeight: 700, fontSize: 12, letterSpacing: 1, textTransform: "uppercase", color: "#8899AA" },
+  colTitle: { flex: 1, fontWeight: 700, fontSize: 12, letterSpacing: 1, textTransform: "uppercase", color: "#BBC8DD" },
   colBadge: { borderRadius: 20, padding: "2px 9px", fontSize: 12, fontWeight: 800 },
   colBar: { height: 3, margin: "0 14px 12px", borderRadius: 2 },
   cardList: { display: "flex", flexDirection: "column", gap: 9, padding: "0 10px", flex: 1 },
-  empty: { textAlign: "center", color: "#2A2D3A", fontSize: 12, padding: "20px 0", border: "1.5px dashed #1E2130", borderRadius: 10 },
+  empty: { textAlign: "center", color: "#556677", fontSize: 12, padding: "20px 0", border: "1.5px dashed #2A3040", borderRadius: 10 },
 
   // Card
-  card: { background: "#181B27", border: "1px solid #222638", borderRadius: 11, padding: "11px 13px", cursor: "grab", userSelect: "none" },
+  card: { background: "#181B27", border: "1px solid #252840", borderRadius: 11, padding: "11px 13px", cursor: "grab", userSelect: "none" },
   cardHead: { display: "flex", alignItems: "center", gap: 6, marginBottom: 5 },
   axoTag: { background: "#4F9CF922", color: "#4F9CF9", fontSize: 9, fontWeight: 800, borderRadius: 4, padding: "2px 6px", letterSpacing: 1 },
-  cardRef: { flex: 1, fontSize: 10, color: "#334", fontWeight: 700, letterSpacing: 1 },
+  cardRef: { flex: 1, fontSize: 10, color: "#7A8BAA", fontWeight: 700, letterSpacing: 1 },
   cardMontant: { fontSize: 14, fontWeight: 800 },
   cardClient: { fontWeight: 800, fontSize: 15, color: "#ECF0FF", marginBottom: 6 },
   tagRow: { display: "flex", gap: 5, flexWrap: "wrap", marginBottom: 7 },
@@ -1043,75 +1043,75 @@ const s = {
   indicators: { display: "flex", gap: 5, flexWrap: "wrap", marginBottom: 5 },
   pill: { fontSize: 10, fontWeight: 700, borderRadius: 5, padding: "3px 7px" },
   fileChip: { fontSize: 10, color: "#4F9CF9", padding: "3px 7px", background: "#4F9CF922", borderRadius: 5, fontWeight: 700 },
-  cardNote: { fontSize: 11, color: "#556", borderTop: "1px solid #1E2130", paddingTop: 6, marginTop: 6, fontStyle: "italic" },
-  cardDate: { fontSize: 10, color: "#334", marginTop: 5 },
+  cardNote: { fontSize: 11, color: "#8899BB", borderTop: "1px solid #252840", paddingTop: 6, marginTop: 6, fontStyle: "italic" },
+  cardDate: { fontSize: 10, color: "#7A8BAA", marginTop: 5 },
 
   // Modal
   overlay: { position: "fixed", inset: 0, background: "rgba(0,0,0,.72)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, backdropFilter: "blur(4px)" },
   modal: { background: "#12141E", borderRadius: 18, border: "1px solid #1E2130", width: "92%", maxHeight: "90vh", overflowY: "auto", position: "relative" },
   modalTop: { padding: "20px 22px 14px", borderBottom: "2px solid", position: "relative" },
-  modalRef: { fontSize: 10, color: "#336", fontWeight: 700, letterSpacing: 2, textTransform: "uppercase" },
+  modalRef: { fontSize: 10, color: "#7A8BAA", fontWeight: 700, letterSpacing: 2, textTransform: "uppercase" },
   modalClient: { fontSize: 22, fontWeight: 900, color: "#fff", marginTop: 4 },
-  closeBtn: { position: "absolute", top: 16, right: 16, background: "none", border: "none", color: "#445", fontSize: 18, cursor: "pointer" },
+  closeBtn: { position: "absolute", top: 16, right: 16, background: "none", border: "none", color: "#8899BB", fontSize: 18, cursor: "pointer" },
   modalBody: { padding: "16px 22px" },
   modalFoot: { padding: "12px 22px 20px", display: "flex", alignItems: "center", borderTop: "1px solid #1A1D2C" },
 
   // Info grid
   infoGrid: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: 16 },
   infoCell: { background: "#181B27", borderRadius: 10, padding: "10px 12px" },
-  infoCellLabel: { fontSize: 10, color: "#445", textTransform: "uppercase", letterSpacing: 1, marginBottom: 4 },
-  infoCellValue: { fontSize: 14, fontWeight: 700, color: "#CCC" },
+  infoCellLabel: { fontSize: 10, color: "#8899BB", textTransform: "uppercase", letterSpacing: 1, marginBottom: 4 },
+  infoCellValue: { fontSize: 14, fontWeight: 700, color: "#E0E4F0" },
 
   // Sections
   section: { marginBottom: 16, background: "#181B27", borderRadius: 10, padding: "12px 14px" },
-  sectionTitle: { fontSize: 11, color: "#556", textTransform: "uppercase", letterSpacing: 1, marginBottom: 10, fontWeight: 700 },
+  sectionTitle: { fontSize: 11, color: "#9AAABB", textTransform: "uppercase", letterSpacing: 1, marginBottom: 10, fontWeight: 700 },
   toggleRow: { display: "flex", justifyContent: "space-between", alignItems: "center" },
-  toggleLabel: { fontSize: 13, color: "#AAB" },
+  toggleLabel: { fontSize: 13, color: "#BCC8DD" },
   toggle: { border: "none", borderRadius: 8, padding: "6px 16px", fontSize: 12, fontWeight: 700, cursor: "pointer" },
 
-  filesLabel: { fontSize: 11, color: "#445", textTransform: "uppercase", letterSpacing: 1, marginBottom: 6 },
+  filesLabel: { fontSize: 11, color: "#8899BB", textTransform: "uppercase", letterSpacing: 1, marginBottom: 6 },
   fileChipFull: { display: "block", color: "#4F9CF9", fontSize: 12, textDecoration: "none", padding: "6px 10px", background: "#1E2130", borderRadius: 7, marginBottom: 5 },
-  uploadBtn: { background: "none", border: "1.5px dashed #2A2D3A", color: "#445", borderRadius: 8, padding: "7px 14px", fontSize: 12, cursor: "pointer", marginTop: 4, width: "100%" },
+  uploadBtn: { background: "none", border: "1.5px dashed #3A3D4A", color: "#7A8BAA", borderRadius: 8, padding: "7px 14px", fontSize: 12, cursor: "pointer", marginTop: 4, width: "100%" },
 
   moveBtn: { background: "none", border: "1.5px solid", borderRadius: 8, padding: "6px 13px", fontSize: 12, cursor: "pointer", fontWeight: 700 },
 
   // Buttons
-  btnEdit: { background: "#181B27", color: "#AAB", border: "1px solid #222638", borderRadius: 8, padding: "8px 16px", fontSize: 13, cursor: "pointer", fontWeight: 700 },
+  btnEdit: { background: "#181B27", color: "#BCC8DD", border: "1px solid #252840", borderRadius: 8, padding: "8px 16px", fontSize: 13, cursor: "pointer", fontWeight: 700 },
   btnDel: { background: "none", color: "#E05", border: "1px solid #E05", borderRadius: 8, padding: "8px 16px", fontSize: 13, cursor: "pointer", fontWeight: 700, marginLeft: "auto" },
 
   // Form
   field: { marginBottom: 14 },
-  fieldLabel: { display: "block", fontSize: 10, color: "#445", textTransform: "uppercase", letterSpacing: 1, marginBottom: 5 },
-  fieldInput: { width: "100%", background: "#181B27", border: "1px solid #222638", borderRadius: 8, padding: "9px 12px", color: "#ECF0FF", fontSize: 14, outline: "none", boxSizing: "border-box" },
-  typeBtn: { background: "#181B27", border: "1.5px solid #222638", borderRadius: 8, padding: "6px 13px", fontSize: 12, color: "#556", cursor: "pointer", fontWeight: 600, transition: "all .15s" },
-  typeGroupLabel: { fontSize: 11, color: "#445", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 4 },
+  fieldLabel: { display: "block", fontSize: 10, color: "#8899BB", textTransform: "uppercase", letterSpacing: 1, marginBottom: 5 },
+  fieldInput: { width: "100%", background: "#181B27", border: "1px solid #252840", borderRadius: 8, padding: "9px 12px", color: "#ECF0FF", fontSize: 14, outline: "none", boxSizing: "border-box" },
+  typeBtn: { background: "#181B27", border: "1.5px solid #252840", borderRadius: 8, padding: "6px 13px", fontSize: 12, color: "#8899BB", cursor: "pointer", fontWeight: 600, transition: "all .15s" },
+  typeGroupLabel: { fontSize: 11, color: "#8899BB", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 4 },
 
   // Axonaut import
   axoRow: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 12px", background: "#181B27", borderRadius: 10, marginBottom: 8 },
 
   // Suggestions client
-  suggestions: { position: "absolute", top: "100%", left: 0, right: 0, background: "#1A1D2C", border: "1px solid #252836", borderRadius: 10, zIndex: 100, maxHeight: 200, overflowY: "auto", boxShadow: "0 8px 24px rgba(0,0,0,0.4)" },
+  suggestions: { position: "absolute", top: "100%", left: 0, right: 0, background: "#1A1D2C", border: "1px solid #252840", borderRadius: 10, zIndex: 100, maxHeight: 200, overflowY: "auto", boxShadow: "0 8px 24px rgba(0,0,0,0.4)" },
   suggestionItem: { padding: "10px 14px", cursor: "pointer", borderBottom: "1px solid #1E2130" },
   suggestionNom: { fontWeight: 700, color: "#ECF0FF", fontSize: 14 },
   suggestionInfos: { color: "#4F9CF9", fontSize: 11, marginTop: 2 },
 
   // Clients book
-  clientRow: { display: "flex", alignItems: "flex-start", gap: 12, padding: "12px 14px", background: "#181B27", borderRadius: 10, marginBottom: 8, border: "1px solid #222638" },
+  clientRow: { display: "flex", alignItems: "flex-start", gap: 12, padding: "12px 14px", background: "#181B27", borderRadius: 10, marginBottom: 8, border: "1px solid #252840" },
   clientNom: { fontWeight: 800, color: "#ECF0FF", fontSize: 15, marginBottom: 4 },
   clientInfos: { display: "flex", flexWrap: "wrap" },
   clientLink: { color: "#4F9CF9", fontSize: 12, textDecoration: "none", fontWeight: 600 },
-  clientAxo: { fontSize: 10, color: "#446", marginTop: 4, letterSpacing: 1 },
+  clientAxo: { fontSize: 10, color: "#7A8BAA", marginTop: 4, letterSpacing: 1 },
   clientCmdBadge: { background: "#4F9CF922", color: "#4F9CF9", borderRadius: 6, padding: "2px 8px", fontSize: 10, fontWeight: 700 },
   clientNewCmd: { background: "linear-gradient(135deg,#4F9CF9,#7B6EF6)", color: "#fff", border: "none", borderRadius: 7, padding: "5px 10px", fontSize: 11, fontWeight: 700, cursor: "pointer" },
-  clientDel: { background: "none", border: "none", color: "#443", fontSize: 13, cursor: "pointer" },
+  clientDel: { background: "none", border: "none", color: "#7A8BAA", fontSize: 13, cursor: "pointer" },
 
   // SAV
   savBadgeCard: { fontSize: 10, color: "#FF5B5B", background: "#FF5B5B18", border: "1px solid #FF5B5B33", borderRadius: 5, padding: "3px 7px", marginTop: 6, fontWeight: 700, display: "inline-block" },
   savComment: { background: "#261520", border: "1px solid #FF5B5B22", borderRadius: 8, padding: "10px 12px", marginBottom: 8 },
   savCommentText: { color: "#E0C0C8", fontSize: 13, lineHeight: 1.5, marginBottom: 6 },
   savCommentMeta: { display: "flex", justifyContent: "space-between", alignItems: "center" },
-  savCommentDate: { fontSize: 10, color: "#664", letterSpacing: 0.3 },
-  savCommentDel: { background: "none", border: "none", color: "#664", fontSize: 13, cursor: "pointer", padding: "0 4px" },
+  savCommentDate: { fontSize: 10, color: "#9AAABB", letterSpacing: 0.3 },
+  savCommentDel: { background: "none", border: "none", color: "#8899BB", fontSize: 13, cursor: "pointer", padding: "0 4px" },
   btnSavAdd: { background: "#FF5B5B18", color: "#FF5B5B", border: "1.5px solid #FF5B5B44", borderRadius: 8, padding: "7px 16px", fontSize: 12, fontWeight: 700, cursor: "pointer", width: "100%" },
 
   // Contact

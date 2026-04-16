@@ -507,7 +507,7 @@ function OrderDetail({ order, onClose, onEdit, onDelete, onMove, onUpdate }) {
               <span style={s.toggleLabel}>Commande passée</span>
               <button
                 style={{ ...s.toggle, background: order.fournisseur_passe ? "#4ECBA1" : "#2A2D3A", color: order.fournisseur_passe ? "#fff" : "#556" }}
-                onClick={() => toggle("fournisseurPasse")}
+                onClick={() => toggle("fournisseur_passe")}
               >
                 {order.fournisseur_passe ? "✓ Oui" : "Non"}
               </button>

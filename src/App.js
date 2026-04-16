@@ -307,9 +307,9 @@ function Card({ order, col, onDragStart, onDragEnd, onClick }) {
 
       {/* Indicateurs */}
       <div style={s.indicators}>
-        <Pill ok={order.fournisseurPasse} labelOk="Fourn. ✓" labelNo="Fourn. ?" color="#4ECBA1" />
+        <Pill ok={order.fournisseur_passe} labelOk="Fourn. ✓" labelNo="Fourn. ?" color="#4ECBA1" />
         <Pill ok={order.bat_statut === "valide"} labelOk="BAT ✓" labelNo="BAT à faire" color="#F4A942" />
-        {(order.bat_files:?.length > 0 || order.maquettes?.length > 0 || order.devis_pdf) && (
+        {(order.bat_files?.length > 0 || order.maquettes?.length > 0 || order.devis_pdf) && (
           <span style={s.fileChip}>📎 {(order.bat_files:?.length || 0) + (order.maquettes?.length || 0) + (order.devis_pdf ? 1 : 0)}</span>
         )}
       </div>
@@ -506,10 +506,10 @@ function OrderDetail({ order, onClose, onEdit, onDelete, onMove, onUpdate }) {
             <div style={s.toggleRow}>
               <span style={s.toggleLabel}>Commande passée</span>
               <button
-                style={{ ...s.toggle, background: order.fournisseurPasse ? "#4ECBA1" : "#2A2D3A", color: order.fournisseurPasse ? "#fff" : "#556" }}
+                style={{ ...s.toggle, background: order.fournisseur_passe ? "#4ECBA1" : "#2A2D3A", color: order.fournisseur_passe ? "#fff" : "#556" }}
                 onClick={() => toggle("fournisseurPasse")}
               >
-                {order.fournisseurPasse ? "✓ Oui" : "Non"}
+                {order.fournisseur_passe ? "✓ Oui" : "Non"}
               </button>
             </div>
           </Section>

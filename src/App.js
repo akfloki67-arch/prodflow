@@ -867,7 +867,6 @@ Mets uniquement les catégories détectées dans le tableau.` }
   <label style={s.fieldLabel}>📄 Importer un devis / facture PDF</label>
   <input type="file" accept="application/pdf" onChange={(e) => e.target.files[0] && handlePdfImport(e.target.files[0])} style={{ color: "#fff" }} />
   </div>
-</div>
         <div style={s.modalFoot}>
           <button style={s.btnNew} onClick={handleSave}>{form.id ? "💾 Enregistrer" : "✦ Créer"}</button>
           <button style={{ ...s.btnEdit, marginLeft: 10 }} onClick={onClose}>Annuler</button>

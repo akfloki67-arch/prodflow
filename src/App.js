@@ -72,6 +72,10 @@ const emptyOrder = () => ({
 // ─── APP ───────────────────────────────────────────────────────────────────────
 
 export default function App() {
+  useEffect(() => {
+    loadOrders().then((data) => { if (Array.isArray(data)) setOrders(data); });
+    loadClients().then((data) => { if (Array.isArray(data)) setClients(data); });
+  }, []);
   const [orders, setOrders] = useState([
     {
       ...emptyOrder(),
@@ -133,18 +137,27 @@ export default function App() {
     });
   };
 
-  const upsert = (order) => {
-    setOrders((prev) =>
-      order.id
-        ? prev.map((o) => (o.id === order.id ? order : o))
-        : [...prev, { ...order, id: nextId++ }]
-    );
-    upsertClient(order);
+ const upsert = (order) => {
+    saveOrder(order).then((data) => {
+      if (Array.isArray(data) && data[0]) {
+        const saved = data[0];
+        setOrders((prev) =>
+          order.id
+            ? prev.map((o) => (o.id === order.id ? saved : o))
+            : [...prev, saved]
+        );
+        upsertClient(saved);
+      }
+    });
   };
 
   const remove = (id) => { setOrders((p) => p.filter((o) => o.id !== id)); setViewOrder(null); };
 
-  const move = (id, col) => setOrders((p) => p.map((o) => o.id === id ? { ...o, status: col } : o));
+  const move = (id, col) => {
+    setOrders((p) => p.map((o) => o.id === id ? { ...o, status: col } : o));
+    const order = orders.find((o) => o.id === id);
+    if (order) saveOrder({ ...order, status: col });
+  };
 
   const importFromAxonaut = (ax) => {
     const order = {

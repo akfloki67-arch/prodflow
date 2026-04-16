@@ -532,7 +532,7 @@ function OrderDetail({ order, onClose, onEdit, onDelete, onMove, onUpdate }) {
             {order.bat_statut === "valide" && (
               <div style={{ marginTop: 10 }}>
                 <div style={s.filesLabel}>Fichiers BAT validés</div>
-                {order.bat_files:?.map((f, i) => <FileChip key={i} f={f} />)}
+                {order.bat_files?.map((f, i) => <FileChip key={i} f={f} />)}
                 <UploadBtn label="+ Ajouter fichier BAT" onClick={() => batRef.current.click()} />
                 <input ref={batRef} type="file" multiple style={{ display: "none" }} onChange={(e) => Array.from(e.target.files).forEach(addBatFile)} />
               </div>

@@ -62,10 +62,10 @@ const emptyOrder = () => ({
   // Types de commande
   types: [],
   // Fournisseur
-  fournisseur_passe false,
+  fournisseur_passe: false,
   // BAT
   bat_statut: "a_faire", // "a_faire" | "valide"
-  bat_files:: [],
+  bat_files: [],
   // Devis PDF
   devis_pdf: null,
   // Maquettes libres
